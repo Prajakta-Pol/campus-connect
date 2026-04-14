@@ -19,9 +19,29 @@ exports.signup = async (req, res) => {
     } = req.body;
 
     // 🔒 Restrict email
-    if (!email.endsWith("@college.edu")) {
-      return res.status(400).json({ message: "Use college email only" });
-    }
+ // ✅ Allowed domains
+const allowedDomains = ["git.edu", "bms.edu", "rvce.edu"];
+
+// clean email
+const cleanEmail = email.trim().toLowerCase();
+
+// debug logs
+console.log("Incoming Email:", cleanEmail);
+
+// extract domain
+const domain = cleanEmail.split("@")[1];
+console.log("Extracted Domain:", domain);
+
+// validation
+const isValid = allowedDomains.some(d => domain.endsWith(d));
+
+console.log("Is Valid:", isValid);
+
+if (!isValid) {
+  return res.status(400).json({
+    message: "Use your college email ID"
+  });
+}
 
     // 🔐 Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
