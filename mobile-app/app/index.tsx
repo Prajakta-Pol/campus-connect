@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import SignupScreen from '../../screens/SignupScreen';
+import SignupScreen from '../screens/SignupScreen';
 
 export default function Index() {
   return (
